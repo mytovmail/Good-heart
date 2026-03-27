@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לב טוב | מפתח פתרונות טכנולוגיים לקהילה</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Assistant:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Heebo', 'Assistant', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 20s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'blob': 'blob 10s infinite',
+                        'shine': 'shine 3s infinite',
+                        'gradient-bg': 'gradientBG 15s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(5deg)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        shine: {
+                            '0%': { backgroundPosition: '200% center' },
+                            '100%': { backgroundPosition: '-200% center' },
+                        },
+                        gradientBG: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                            '100%': { backgroundPosition: '0% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; border: 2px solid #f1f5f9; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #0284c7, #6366f1);
+        }
+
+        .hero-light-bg {
+            background: linear-gradient(-45deg, #f0f9ff, #e0f2fe, #f8fafc, #ede9fe);
+            background-size: 400% 400%;
+            position: relative;
+        }
+
+        .glass-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 10;
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(to bottom right, #38bdf8, #818cf8);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.25);
+            border-color: transparent;
+        }
+        .glass-card:hover::before { opacity: 1; }
+
+        .btn-premium {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.4);
+        }
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 4s infinite;
+        }
+        .btn-premium:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(14, 165, 233, 0.5);
+        }
+
+        .icon-box {
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        .icon-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            filter: blur(20px);
+            opacity: 0.3;
+            z-index: -1;
+            transition: opacity 0.5s ease;
+        }
+        .glass-card:hover .icon-box {
+            transform: scale(1.05) translateY(-5px);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/70 backdrop-blur-xl border-b border-slate-200/50" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-3 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl shadow-lg shadow-brand-500/30 flex items-center justify-center transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                    <i class="fa-solid fa-gem text-white text-lg"></i>
+                </div>
+                <span class="text-2xl font-black text-slate-900 tracking-tight">לב טוב</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#projects" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition-colors uppercase tracking-widest relative after:content-[''] after:absolute after:-bottom-2 after:right-0 after:w-0 after:h-0.5 after:bg-brand-500 after:transition-all hover:after:w-full">העבודות שלי</a>
+                <a href="mailto:myylbwt@gmail.com" class="btn-premium text-white px-7 py-2.5 rounded-full font-bold text-sm tracking-wide">
+                    צור קשר
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-light-bg animate-gradient-bg min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 relative">
+        <div class="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-blue-300/30 rounded-full blur-[100px] mix-blend-multiply animate-blob"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-[35rem] h-[35rem] bg-indigo-300/30 rounded-full blur-[100px] mix-blend-multiply animate-blob" style="animation-delay: 2s;"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10 flex flex-col items-center">
+            <div data-aos="fade-down" data-aos-duration="1000" class="mb-8">
+                <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-brand-200/60 bg-white/60 backdrop-blur-md text-sm font-bold text-brand-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    מפתח • יוצר • טכנולוגיה
+                </div>
+            </div>
+            
+            <h1 data-aos="zoom-in-up" data-aos-duration="1200" data-aos-delay="100" class="text-6xl md:text-8xl lg:text-9xl font-black text-slate-900 mb-6 leading-[1.1] tracking-tight">
+                יוצרים ערך, <br>
+                <span class="text-gradient drop-shadow-sm">בונים קדושה.</span>
+            </h1>
+            
+            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300" class="text-slate-600 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+                ברוכים הבאים ל"לב טוב". כמפתח המשלב בין עולם התורה לעולם הטכנולוגיה, המטרה שלי היא ליצור כלים דיגיטליים נקיים, יעילים ומותאמים אישית לציבור הירא לדבר ה'.
+            </p>
+            
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500" class="flex flex-col sm:flex-row justify-center gap-5 w-full sm:w-auto">
+                <a href="#projects" class="btn-premium text-white px-10 py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 w-full sm:w-auto group">
+                    לפרויקטים הנבחרים <i class="fa-solid fa-arrow-down text-sm transition-transform group-hover:translate-y-1"></i>
+                </a>
+                <a href="mailto:myylbwt@gmail.com" class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] px-10 py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-3 w-full sm:w-auto group">
+                    שליחת אימייל <i class="fa-regular fa-envelope transition-transform group-hover:-rotate-12 group-hover:text-brand-500"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section id="projects" class="py-32 px-6 relative bg-white">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20" data-aos="fade-left">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">פרויקטים נבחרים</h2>
+                    <p class="text-slate-500 text-lg md:text-xl font-medium max-w-2xl">כלים שפותחו מתוך שליחות ורצון להביא תועלת, התייעלות וקדושה למרחב הדיגיטלי.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
+                
+                <!-- The House -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up">
+                    <div class="icon-box bg-gradient-to-br from-teal-100 to-teal-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-house-chimney text-6xl text-teal-600 transition-transform duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-teal-100 text-teal-700 text-xs font-bold px-3 py-1 rounded-full">פלטפורמה תורנית</span>
+                            <h3 class="text-2xl font-black text-slate-900">הבית לזוגות צעירים</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">אתר של הרב אביאל נריה, מנחה ויועץ זוגי. האתר מכיל את כל מאגר הדרייב עם ההרצאות והשיעורים המיוחדים לחברים ב"בית".</p>
+                    </div>
+                    <a href="https://mytovmail.github.io/The-house" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-teal-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        כניסה לאתר <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Habit Tracking -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="icon-box bg-gradient-to-br from-lime-100 to-lime-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-list-ol text-6xl text-lime-600 transition-transform duration-500 group-hover:-translate-y-2"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-lime-100 text-lime-700 text-xs font-bold px-3 py-1 rounded-full">אפליקציית רשת</span>
+                            <h3 class="text-2xl font-black text-slate-900">מעקב הרגלים אישי</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">מערכת לניהול סדר היום, מעקב אחר קביעות עיתים לתורה, תפילות ופיתוח הרגלים רוחניים חיוביים.</p>
+                    </div>
+                    <a href="https://mytovmail.github.io/Habit-tracking/" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-lime-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        למערכת <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Tohar Board -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="icon-box bg-gradient-to-br from-blue-100 to-blue-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-calendar-check text-6xl text-blue-600 transition-transform duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">ניהול אישי</span>
+                            <h3 class="text-2xl font-black text-slate-900">לוח טהרה</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">כלי עזר לניהול ומעקב אישי המותאם לצרכי המשתמש בבית היהודי, תוך שמירה על פשטות ודיסקרטיות.</p>
+                    </div>
+                    <a href="https://mytovmail.github.io/Tohar-Board/" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-blue-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        ללוח <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Filtered YouTube Extension -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up">
+                    <div class="icon-box bg-gradient-to-br from-rose-100 to-rose-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-brands fa-youtube text-6xl text-rose-600 transition-transform duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full">תוסף לכרום</span>
+                            <h3 class="text-2xl font-black text-slate-900">תוסף יוטיוב מסונן</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">תוסף לשמירה אוטו' של סרטונים שצפיתם בהם למסד נתונים אישי לסינון שלכם, כולל ממשק חיפוש ייעודי לסרטונים פתוחים.</p>
+                    </div>
+                    <a href="https://chromewebstore.google.com/detail/%D7%99%D7%95%D7%98%D7%99%D7%95%D7%91-%D7%9E%D7%A1%D7%95%D7%A0%D7%9F/mmbcknelibfgknmdppoapmpfkbfbempa" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-rose-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        לחנות הכרום <i class="fa-brands fa-chrome text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Yo-Tube -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="icon-box bg-gradient-to-br from-red-100 to-red-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-brands fa-youtube text-6xl text-red-600 transition-transform duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">סינון וידאו</span>
+                            <h3 class="text-2xl font-black text-slate-900">יו-טוב</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">אתר המציע חיפוש כללי ביוטיוב עם הצגת תוצאות רק של סרטונים הפתוחים בסינון המשתמש.</p>
+                    </div>
+                    <a href="https://xsx-x.github.io/Filtered-YouTube-2/" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-red-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        כניסה לאתר <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Jewish Home Forum -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="icon-box bg-gradient-to-br from-indigo-100 to-indigo-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-landmark-dome text-6xl text-indigo-600 transition-transform duration-500 group-hover:-translate-y-2"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">מאגר תורני</span>
+                            <h3 class="text-2xl font-black text-slate-900">פורום הבית היהודי</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">אתר המציג את הדרייב המלא של חברי פורום הבית היהודי, כולל לוח זמני שיעורים ומאמרים תורניים.</p>
+                    </div>
+                    <a href="https://xsx-x.github.io/Jewish-Home-Forum-Lectures-and-Lessons/" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-indigo-600 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        בקר בפורום <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Daily Strengthening -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up">
+                    <div class="icon-box bg-gradient-to-br from-orange-100 to-orange-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-book-open text-6xl text-orange-500 transition-transform duration-500 group-hover:rotate-[-5deg]"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">תוסף לכרום</span>
+                            <h3 class="text-2xl font-black text-slate-900">התחזקות יומית</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">תוסף המקפיץ בכל יום תכנים תורניים מעשירים של התחזקות יומית והלכה יומית ישירות בדפדפן.</p>
+                    </div>
+                    <a href="https://chromewebstore.google.com/detail/%D7%94%D7%AA%D7%A7%D7%96%D7%A7%D7%95%D7%AA-%D7%99%D7%95%D7%9D%D7%99%D7%AA/jgpakkbdijcfkajakcokhilcdkodcjkk" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-orange-500 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        לחנות הכרום <i class="fa-brands fa-chrome text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Typing Game -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="icon-box bg-gradient-to-br from-cyan-100 to-cyan-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-keyboard text-6xl text-cyan-500 transition-transform duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-cyan-100 text-cyan-700 text-xs font-bold px-3 py-1 rounded-full">משחק אינטראקטיבי</span>
+                            <h3 class="text-2xl font-black text-slate-900">גשם של מילים</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">משחק חווייתי המיועד לאימון והתרגלות בהקלדה מהירה בשיטה עיוורת.</p>
+                    </div>
+                    <a href="https://ketertorah.co.il/%D7%91%D7%9E%D7%94-%D7%9C%D7%99%D7%95%D7%A6%D7%A8%D7%99%D7%9D/%D7%94%D7%A7%D7%9C%D7%93%D7%94-%D7%A2%D7%95%D7%95%D7%A8%D7%AA.html" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-cyan-500 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        שחק עכשיו <i class="fa-solid fa-gamepad text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Notes Extension -->
+                <div class="project-card glass-card rounded-[2rem] p-8 flex flex-col group" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="icon-box bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-3xl h-48 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-note-sticky text-6xl text-yellow-500 transition-transform duration-500 group-hover:-translate-y-2"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full">תוסף לכרום</span>
+                            <h3 class="text-2xl font-black text-slate-900">תוסף פתקים</h3>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed mb-8 font-medium">ניהול משימות, הכתבה קולית ותזכורות חכמות בתוך הדפדפן לשיפור הפרודוקטיביות.</p>
+                    </div>
+                    <a href="https://chromewebstore.google.com/detail/%D7%A4%D7%AA%D7%A7%D7%99%D7%9D/gfmedklhbigocfldmpmincakpbneiohp" target="_blank" class="w-full bg-slate-50 text-slate-700 hover:bg-yellow-500 hover:text-white border border-slate-200 text-center py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                        צפה בתוסף <i class="fa-brands fa-chrome text-sm"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="bg-gradient-to-b from-slate-50 to-blue-50/50 pt-32 pb-16 relative overflow-hidden border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-16" data-aos="zoom-in">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-50 border border-red-100 mb-8 text-red-500 shadow-[0_8px_30px_rgba(239,68,68,0.15)] relative">
+                    <div class="absolute inset-0 rounded-full animate-ping bg-red-100 opacity-70"></div>
+                    <i class="fa-solid fa-heart text-2xl relative z-10"></i>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">לב טוב - יוצרים פתרונות מהלב</h2>
+                
+                <div class="bg-white border border-slate-200 shadow-sm p-2 rounded-3xl flex flex-col sm:flex-row items-center gap-2 max-w-lg mx-auto transition-all hover:border-brand-200">
+                    <div class="w-full flex-grow py-4 px-4 text-xl font-bold text-slate-800 tracking-wide text-center sm:text-right select-all" dir="ltr">
+                        myylbwt@gmail.com
+                    </div>
+                    <a href="mailto:myylbwt@gmail.com" class="btn-premium w-full sm:w-auto text-white px-8 py-4 rounded-2xl font-bold transition-all flex items-center justify-center gap-2">
+                        כתבו לי
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-10 border-t border-slate-200/80 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2 text-brand-500">
+                    <i class="fa-solid fa-gem text-xl"></i>
+                    <span class="text-slate-800 font-black ml-2 text-lg">לב טוב <span class="text-slate-400 font-medium">- תשפ"ו</span></span>
+                </div>
+                <div class="text-slate-500 font-medium text-sm">
+                    נוצר עבור קהילת בני התורה <i class="fa-solid fa-book-open text-brand-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 50 });
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-[0_4px_20px_rgba(0,0,0,0.05)]', 'bg-white/95');
+            } else {
+                navbar.classList.remove('shadow-[0_4px_20px_rgba(0,0,0,0.05)]', 'bg-white/95');
+            }
+        });
+    </script>
+</body>
+</html>
